@@ -1,0 +1,22 @@
+{
+  "name": "backend",
+  "version": "1.0.0",
+  "description": "backend dependencies",
+  "main": "server.ts",
+  "scripts": {
+    "test": "jest"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/WizardBeardStudio/open-game-telemetry.git"
+  },
+  "author": "Wesley",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/WizardBeardStudio/open-game-telemetry/issues"
+  },
+  "homepage": "https://github.com/WizardBeardStudio/open-game-telemetry#readme",
+  "dependencies": {
+    "express": "^5.2.1"
+  }
+}
