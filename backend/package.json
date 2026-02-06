@@ -17,6 +17,18 @@
   },
   "homepage": "https://github.com/WizardBeardStudio/open-game-telemetry#readme",
   "dependencies": {
+    "@prisma/client": "^6.19.2", 
     "express": "^5.2.1"
-  }
+  },
+  
+  "devDependencies": {
+    "@types/node": "^22.0.0",
+    "prisma": "^6.19.2",
+    "tsx": "^4.19.2"
+  },
+  
+  "prisma": {
+  "seed": "npx tsx prisma/seed.ts"
+}
+
 }
