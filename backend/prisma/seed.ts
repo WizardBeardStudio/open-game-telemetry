@@ -38,4 +38,3 @@ main()
     await prisma.$disconnect();
     throw e; 
   });
-  
