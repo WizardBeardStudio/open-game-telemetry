@@ -4,7 +4,8 @@
   "description": "backend dependencies",
   "main": "server.ts",
   "scripts": {
-    "test": "jest"
+    "test": "jest",
+    "dev": "npx tsx watch server.ts"
   },
   "repository": {
     "type": "git",
@@ -17,18 +18,20 @@
   },
   "homepage": "https://github.com/WizardBeardStudio/open-game-telemetry#readme",
   "dependencies": {
-    "@prisma/client": "^6.19.2", 
+    "@prisma/client": "^6.19.2",
     "express": "^5.2.1"
   },
   
   "devDependencies": {
+    "@types/express": "^5.0.6",
     "@types/node": "^22.0.0",
+    "msw": "^2.12.9",
+    "nodemon": "^3.1.11",
     "prisma": "^6.19.2",
-    "tsx": "^4.19.2"
+    "tsx": "^4.21.0"
   },
   
   "prisma": {
-  "seed": "npx tsx prisma/seed.ts"
-}
-
+    "seed": "npx tsx prisma/seed.ts"
+  }
 }

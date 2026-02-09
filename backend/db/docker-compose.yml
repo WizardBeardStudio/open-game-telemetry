@@ -9,4 +9,4 @@ services:
      - MYSQL_DATABASE=${DB_DEV_NAME}
    volumes:
      - ./mysql_data:/var/lib/mysql
-     
+   
