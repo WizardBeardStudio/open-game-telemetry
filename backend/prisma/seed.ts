@@ -1,5 +1,5 @@
 import { PrismaClient } from '@prisma/client'
-const prisma = new PrismaClient()
+import prisma from '../prismaClient'
 
 async function main() {
   console.log('🌱 Starting seeding...')
@@ -38,3 +38,4 @@ main()
     await prisma.$disconnect();
     throw e; 
   });
+  
