@@ -1,0 +1,40 @@
+name: Run Tests
+
+on:
+  push:
+    branches: [ "DEV" ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    
+    strategy:
+      matrix:
+        node-version: [22.x]
+
+    steps:
+    - uses: actions/checkout@v4
+
+    - name: Use Node.js ${{ matrix.node-version }}
+      uses: actions/setup-node@v4
+      with:
+        node-version: ${{ matrix.node-version }}
+        cache: 'npm'
+
+    - name: Install dependencies
+      run: npm ci
+
+    - name: Install missing types
+      run: npm install --save-dev @types/express
+
+    - name: Generate Prisma Client
+      run: npx prisma@6 generate --schema ./backend/prisma/schema.prisma
+      env:
+        DATABASE_URL: "mysql://root:KriuqGnol26@localhost:3307/DB_DEV"
+
+    - name: Run Build
+      run: npm run build --if-present
+
+    - name: Run Tests
+      run: npm test -- backend/tests
+      

@@ -4,7 +4,6 @@
   "description": "backend dependencies",
   "main": "server.ts",
   "scripts": {
-    "test": "jest",
     "dev": "npx tsx watch server.ts"
   },
   "repository": {
