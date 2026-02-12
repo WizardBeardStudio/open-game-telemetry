@@ -25,9 +25,8 @@ jobs:
       run: npm ci
 
     - name: Generate Prisma Client
-      run: npx prisma generate
+      run: npx prisma generate --schema ./backend/prisma/schema.prisma
       env:
-        # Dummy URL to satisfy Prisma's validation during generation
         DATABASE_URL: "mysql://root:KriuqGnol26@localhost:3307/DB_DEV"
 
     - name: Run Build
