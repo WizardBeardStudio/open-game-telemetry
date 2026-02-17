@@ -1,4 +1,5 @@
 import express from 'express';
+import { checkPSK } from '../middleware/checkPSK';
 import { ingestEvents } from '../controllers/eventsController';
 
 
@@ -6,6 +7,6 @@ import { ingestEvents } from '../controllers/eventsController';
 const router = express.Router();
 
 //define routes
-router.post('/events', ingestEvents);
+router.post('/events', checkPSK, ingestEvents);
 
 export default router;

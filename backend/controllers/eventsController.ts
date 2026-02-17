@@ -61,11 +61,7 @@ interface EventMetaData {
  */
 export async function ingestEvents(req: Request, res: Response) {
   // Pre-shared key used to authenticate telemetry ingestion requests
-  const PSK = req.headers["X-Telemetry-Key"];
-
-  if (!PSK) {
-    return res.status(401).json({ error: "Unauthorized" });
-  }
+  
 
   // Extract and normalize request payload
   const metaData: EventMetaData = req.body.metaData;

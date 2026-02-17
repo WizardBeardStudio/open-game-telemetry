@@ -23,7 +23,7 @@ describe('event ingestion', () => {
      */
     test('should save a game event and return 201', async () => {
       const mockReq = {
-        headers: { "X-Telemetry-Key": "valid-key" },
+        headers: { "X-Telemetry-Key": process.env.PSK},
         body: {
           metaData: { 
             id: "67845c8c-0e6a-4694-95df-37bc49e91f1b", 
@@ -43,19 +43,6 @@ describe('event ingestion', () => {
       expect(mockRes.json).toHaveBeenCalledWith({ status: "Event ingested" });
     });
 
-    /**
-     * AUTHENTICATION EDGE CASE
-     * Ensures the database is never reached if the security header is missing.
-     */
-    test('should return 401 if X-Telemetry-Key is missing', async () => {
-      const mockReq = { headers: {}, body: {} } as unknown as Request;
-
-      await ingestEvents(mockReq, mockRes as Response);
-
-      expect(mockRes.status).toHaveBeenCalledWith(401);
-      // Verify database was not called
-      expect(prismaMock.gameEvent.create).not.toHaveBeenCalled();
-    });
 
     /**
      * SCHEMA VALIDATION EDGE CASE
