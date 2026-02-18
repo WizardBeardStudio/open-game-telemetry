@@ -15,7 +15,7 @@ describe('Tests middleware which verifies that incoming requests contain a valid
         nextFunction = jest.fn();
   });
 
-    test('Should return 401 if PSK is invalid', () => {
+    test('Should return 401 if PSK is missing', () => {
         const mockReq = {
                 headers: {},
                 body: {
@@ -37,7 +37,7 @@ describe('Tests middleware which verifies that incoming requests contain a valid
     });
 
     
-    test('Should return 401 if PSK is missing', () => {
+    test('Should return 401 if PSK is invalid', () => {
         const mockReq = {
                 headers: {'X-Telemetry-Key': '2acdb160-4f15-46e3-92b2-b377cae90f2b'},
                 body: {
