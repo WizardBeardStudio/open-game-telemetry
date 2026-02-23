@@ -11,4 +11,4 @@ export function checkPSK(req: Request, res: Response, next: NextFunction) {
     }
 
     next();
-}
+};

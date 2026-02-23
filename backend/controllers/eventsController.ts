@@ -1,6 +1,7 @@
 import type { Request, Response } from "express";
 import prisma from "../prismaClient";
 import { PrismaClientKnownRequestError, PrismaClientValidationError } from "@prisma/client/runtime/library";
+import { off } from "process";
 
 /**
  * Describes identifying information about the game emitting telemetry events.
@@ -84,7 +85,8 @@ export async function ingestEvents(req: Request, res: Response) {
 
     // Successful ingestion
     return res.status(201).json({ status: "Event ingested" });
-  } catch (error) {
+  } 
+  catch (error) {
     // Prisma schema or data validation errors (malformed input)
     if (error instanceof PrismaClientValidationError) {
         return res.status(400).json({ errorMessage: error.message });
@@ -97,5 +99,56 @@ export async function ingestEvents(req: Request, res: Response) {
 
     // Fallback for unhandled errors
     return res.status(500).json({ errorMessage: "Internal server error" });
+  }
+}
+
+
+/*
+ * Fetches events from the database
+ * Takes in multiple filters via a url query string
+ * These filters are used for the where clause in the database query
+*/
+export async function fetchEvents(req: Request, res: Response) {
+  //Filters passed via query string in url
+  const { gameName, gameType, eventType } = req.query;
+
+  //Object passed to the where clause
+  const whereClause: any = {};
+
+  //Checks if filter is present, if so pass it to the whereClause object
+  if (gameName) whereClause.gameName = String(gameName);
+  if (gameType) whereClause.gameType = String(gameType);
+  if (eventType) whereClause.eventType = String(eventType);
+
+  //Pagination logic passed via string query in url
+  const limit = parseInt(req.query.limit as string) || 10; //Sent from frontend depending on screen size, otherwise is set to 10
+  const page = parseInt(req.query.page as string) || 1;
+  const offset = (page - 1) * limit;
+  
+
+  //Attempt to query the database
+  try {
+    const events = await prisma.gameEvent.findMany({
+      select: {
+        id: true,
+        gameName: true,
+        gameType: true,
+        gameVersion: true,
+        eventType: true,
+        timestamp: true
+      },
+      where: whereClause,
+      take: limit,
+      skip: offset
+    });
+
+    if(events.length === 0){
+      return res.status(404).json({error: 'Event does not exist'});
+    }
+
+    res.status(200).json(events);
+  } 
+  catch (error) {
+    res.status(500).json({ error: 'Internal server error' });
   }
 }
