@@ -1,34 +1,48 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
+import { BrowserRouter, Routes, Route, Navigate } from "react-router";
+import Login from "./login/login";
+import Signup from "./signup/signup";
+import Home from "./home/home";
 import './App.css'
+import { authClient } from "./lib/auth-client";
+import { useState, type ReactNode } from "react";
 
 function App() {
-  const [count, setCount] = useState(0)
+
+interface ProtectedRouteProps {
+  children: ReactNode;
+}
+
+function ProtectedRoute({ children }: ProtectedRouteProps) {
+  const { data: session, error } = authClient.useSession();
+  const [buffering, setBuffering] = useState(true);
+
+  setTimeout(() => {
+    setBuffering(false);
+  }, 500);
+
+  if(buffering){
+    return <div className='spinner'></div>
+  }
+  
+  if(!buffering){
+    if(session){
+      return <>{children}</>
+    }
+
+    if(error) return <Navigate to='/login'/>
+
+    return <Navigate to='/login'/>
+  }
+}
 
   return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
+    <BrowserRouter>
+      <Routes>
+        <Route path='/signup' element={<Signup/>}/>
+        <Route path='login' element={<Login />}></Route>
+        <Route path='/home' element={<ProtectedRoute><Home /></ProtectedRoute>}></Route>
+      </Routes>
+    </BrowserRouter>
   )
 }
 

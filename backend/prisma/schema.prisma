@@ -26,8 +26,12 @@ model User {
   sessions      Session[]
   accounts      Account[]
 
+  username        String?
+  displayUsername String? @db.Text
+
   @@unique([email])
   @@map("user")
+  @@unique([username])
 }
 
 model Session {
@@ -79,14 +83,15 @@ model Verification {
 }
 
 // --- Game Event Models ---
+
 model GameEvent {
-  id String @id @default(uuid())
-  eventType String 
-  timestamp DateTime @default(now()) @db.DateTime(3)
-  gameName String
-  gameType String
+  id          String   @id @default(uuid())
+  eventType   String
+  timestamp   DateTime @default(now()) @db.DateTime(3)
+  gameName    String
+  gameType    String
   gameVersion String
-  payload   Json?
+  payload     Json?
 
   @@map("GameEvents")
 }
