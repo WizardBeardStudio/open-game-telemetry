@@ -10,6 +10,8 @@
     "test": "jest"
   },
   "dependencies": {
-    "better-auth": "^1.5.1"
+    "@prisma/client": "^6.19.2",
+    "better-auth": "^1.5.1",
+    "prisma": "^6.19.2"
   }
 }
