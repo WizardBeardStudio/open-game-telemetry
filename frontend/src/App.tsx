@@ -4,21 +4,26 @@ import Signup from "./signup/signup";
 import Home from "./home/home";
 import './App.css'
 import { authClient } from "./lib/auth-client";
-import { useState, type ReactNode } from "react";
+import { useEffect, useState, type ReactNode } from "react";
 
 function App() {
 
 interface ProtectedRouteProps {
   children: ReactNode;
 }
+const client = authClient(import.meta.env.VITE_BETTER_AUTH_URL);
 
 function ProtectedRoute({ children }: ProtectedRouteProps) {
-  const { data: session, error } = authClient.useSession();
+  const { data: session, error } = client.useSession();
   const [buffering, setBuffering] = useState(true);
 
-  setTimeout(() => {
-    setBuffering(false);
-  }, 500);
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setBuffering(false);
+    }, 750); 
+    
+    return () => clearTimeout(timer);
+  }, [])
 
   if(buffering){
     return <div className='spinner'></div>

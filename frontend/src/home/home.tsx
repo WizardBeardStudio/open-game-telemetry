@@ -1,28 +1,13 @@
 import styles from './home.module.css';
-import { authClient } from '../lib/auth-client';
-import { useNavigate } from 'react-router';
+import { useAuth } from '../hooks/useAuth';
 
 export default function Home(){
-    const navigate = useNavigate();
-
-
-    async function signout(){
-        await authClient.signOut({
-            fetchOptions: {
-                onSuccess: () => {
-                    navigate('/login');
-                }
-            }
-        });
-        await authClient.revokeSession({
-            token: "session-token"
-        });
-    }
+    const authHook = useAuth();
     
     return(
         <div className={styles.pageContainer}>
             <h1 className={styles.homeHeader}>Home</h1>
-            <button type='button' onClick={() => signout()}>sign out</button>
+            <button type='button' onClick={() => authHook.authActions.signout()}>sign out</button>
         </div>
     )
 }

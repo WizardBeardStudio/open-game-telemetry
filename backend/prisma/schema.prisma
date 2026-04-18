@@ -16,7 +16,7 @@ datasource db {
 // --- Auth Models ---
 
 model User {
-  id            String    @id
+  id            String    @id @db.VarChar(255)
   name          String    @db.Text
   email         String
   emailVerified Boolean   @default(false)
