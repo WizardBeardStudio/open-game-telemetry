@@ -1,7 +1,6 @@
 import type { Request, Response } from "express";
 import prisma from "../prismaClient";
 import { PrismaClientKnownRequestError, PrismaClientValidationError } from "@prisma/client/runtime/library";
-import { off } from "process";
 
 /**
  * Describes identifying information about the game emitting telemetry events.

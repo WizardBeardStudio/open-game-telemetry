@@ -6,7 +6,12 @@
     "jest-mock-extended": "^4.0.0",
     "ts-jest": "^29.4.6"
   },
-    "scripts": {
+  "scripts": {
     "test": "jest"
+  },
+  "dependencies": {
+    "@prisma/client": "^6.19.2",
+    "better-auth": "^1.5.1",
+    "prisma": "^6.19.2"
   }
 }
