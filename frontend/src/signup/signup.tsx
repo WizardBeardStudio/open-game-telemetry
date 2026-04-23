@@ -31,7 +31,7 @@ export default function Signup(){
                 <input id='username' className='usernameInput' type='text' value={username} onChange={handleUsername}></input>
                 <label htmlFor='password'>Password: </label>
                 <input id='password' type='password' className='passwordInput' value={password} onChange={handlePassword}></input>
-                <button type='button' onClick={() => authHook.authActions.email.signup(username, email, password)}>Sign Up</button>
+                <button type='button' className='signupButton' onClick={() => authHook.authActions.email.signup(username, email, password)}>Sign Up</button>
                 {authHook.isLoading ? <div className={styles.spinner}></div> : null}
             </div>
         </div>
