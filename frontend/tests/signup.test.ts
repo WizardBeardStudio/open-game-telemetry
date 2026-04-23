@@ -1,7 +1,6 @@
 import { test, expect } from "@playwright/test";
 import dotenv from "dotenv";
 dotenv.config();
-const url = process.env.TEST_URL;
 
 test("tests signup flow", async ({ page }) => {
   await page.route("**/api/auth/**", async (route) => {
@@ -15,7 +14,7 @@ test("tests signup flow", async ({ page }) => {
     });
   });
 
-  await page.goto(`${url}/signup`);
+  await page.goto('/signup');
 
   await page.getByLabel("email").fill("test@gmail.com");
 
@@ -25,5 +24,5 @@ test("tests signup flow", async ({ page }) => {
 
   await page.locator(".signupButton").click();
 
-  await expect(page).toHaveURL(`${url}/home`);
+  await expect(page).toHaveURL('/home');
 });
