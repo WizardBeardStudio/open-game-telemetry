@@ -3,11 +3,14 @@ on:
   push:
     branches: [ main, master, DEV ]
   pull_request:
-    branches: [ main, master ]
+    branches: [ main, master, DEV ]
 jobs:
   test:
     timeout-minutes: 60
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: frontend
     steps:
     - uses: actions/checkout@v4
     - uses: actions/setup-node@v4
