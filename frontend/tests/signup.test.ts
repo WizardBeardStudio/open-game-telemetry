@@ -26,3 +26,4 @@ test("tests signup flow", async ({ page }) => {
 
   await expect(page).toHaveURL('/home');
 });
+ 
