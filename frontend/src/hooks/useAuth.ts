@@ -2,6 +2,7 @@ import { useState } from "react";
 import { useNavigate } from "react-router";
 import { authClient } from "../lib/auth-client";
 
+
 const client = authClient(import.meta.env.VITE_BETTER_AUTH_URL); //may need to  tweak this as setting the baseURL here may complicate testing
 
 export function useAuth() {
@@ -34,9 +35,6 @@ export function useAuth() {
           {
             onRequest: () => setIsLoading(true),
             onSuccess: async () => {
-              await client.revokeSession({
-                token: "session-token",
-              });
               setIsLoading(false);
               navigate("/home");
             },
@@ -49,18 +47,21 @@ export function useAuth() {
     },
 
     signout: async () =>
-      await client.signOut(undefined, {
-        onRequest: () => {
-          setIsLoading(true);
-        },
-        onSuccess: () => {
-          setIsLoading(false);
-          navigate("/login"); // redirect after logout
-        },
-        onError: (ctx) => {
-          setIsLoading(false);
-          alert(ctx.error.message);
-        },
+      await client.signOut({
+        fetchOptions: {
+          onRequest: () => setIsLoading(true),
+          onSuccess: async() => {
+            await client.revokeSession({
+              token: "session-token"
+            })
+            setIsLoading(false);
+            navigate('/login')
+          },
+          onError: (ctx) => {
+            setIsLoading(false);
+            alert(ctx.error.message)
+          }
+        }
       }),
   };
 
