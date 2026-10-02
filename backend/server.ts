@@ -8,6 +8,7 @@ import { auth } from "./lib/auth";
 
 //import routes
 import eventRoutes from './routes/eventRoutes'
+import authProviderRoutes from './routes/authProvidersRoutes'
 
 //app initialization
 const app = express();
@@ -32,6 +33,9 @@ app.get('/', (req, res) => {
 
 //telemetry event routes
 app.use('/api/telemetry', eventRoutes);
+
+//authProvider routes
+app.use('/api/auth-providers', authProviderRoutes);
 
 //listen
 app.listen(port, () => {

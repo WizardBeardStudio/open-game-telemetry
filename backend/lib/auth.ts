@@ -12,6 +12,7 @@ export const auth = (trustedOrigins: string) => betterAuth({
         provider: 'mysql'
     }),
     emailAndPassword: {
-        enabled: securityConfig.emailAndPassword
+        enabled: securityConfig.emailAndPassword,
+        socialProviders: securityConfig.socialProviders
     }
 });
